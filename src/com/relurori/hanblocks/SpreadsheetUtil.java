@@ -9,9 +9,9 @@ import android.os.Bundle;
 
 public class SpreadsheetUtil {
 	
-	private Account account;
+	private static Account account;
 	
-	public AccountManagerCallback<Bundle> doneCallback = new AccountManagerCallback<Bundle>() {
+	public static AccountManagerCallback<Bundle> doneCallback = new AccountManagerCallback<Bundle>() {
 
 		@Override
 		public void run(AccountManagerFuture<Bundle> arg0) {
@@ -34,11 +34,28 @@ public class SpreadsheetUtil {
 		}
 	};
 	
-	class SampleTask extends AsyncTask<Void,Void,Void> {
+	static class  SampleTask extends AsyncTask<Void,Void,Void> {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			// TODO Auto-generated method stub
+
+			TokenSupplier supplier = new TokenSupplier() {
+                @Override
+                public void invalidateToken(String token) {
+                    AccountManager.get(getActivity()).invalidateAuthToken("com.google", token);
+                }
+                @Override
+                public String getToken(String authTokenType) {
+                    try {
+                        return AccountManager.get(getActivity()).blockingGetAuthToken(account, authTokenType, true);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            };
+            
+            SpreadsheetsService service = new SpreadsheetsService("hanblocks-app", supplier);
+            
 			return null;
 		}
 		

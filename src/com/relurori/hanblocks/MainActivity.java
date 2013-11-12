@@ -31,6 +31,8 @@ public class MainActivity extends Activity {
 	private Fragment mTempFragment = null;
 	private QuickplayFragment mQuizFragment = new QuickplayFragment();
 	private StudyFragment mStudyFragment = new StudyFragment();
+	private SettingsFragment mSettingsFragment = new SettingsFragment();
+	
 
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
@@ -135,6 +137,8 @@ public class MainActivity extends Activity {
 		Bundle b = new Bundle();
 		switch(position) {
 		case 0:
+			mTempFragment = mStudyFragment;
+			b.putInt(mStudyFragment.DRAWER_ITEM_KEY, position);
 		case 1:
 			mTempFragment = mQuizFragment;
 			b.putInt(mQuizFragment.DRAWER_ITEM_KEY, position);
@@ -142,8 +146,8 @@ public class MainActivity extends Activity {
 		case 2:
 		case 3:
 		default:
-			mTempFragment = mStudyFragment;
-			b.putInt(mStudyFragment.DRAWER_ITEM_KEY, position);
+			mTempFragment = mSettingsFragment;
+			b.putInt(mSettingsFragment.DRAWER_ITEM_KEY, position);
 		}
 		mTempFragment.setArguments(b);
 		
