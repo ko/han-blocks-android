@@ -16,6 +16,10 @@
 
 package rom.relurori.hanblocks.db.spreadsheet;
 
+import android.app.Activity;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
@@ -29,7 +33,9 @@ import java.io.IOException;
  */
 public class GetNameInForeground extends AbstractGetNameTask {
 
-  public GetNameInForeground(SpreadsheetGdataActivity activity, String email, String scope, int requestCode) {
+	private static final String TAG = GetNameInForeground.class.getSimpleName();
+	
+  public GetNameInForeground(Activity activity, String email, String scope, int requestCode) {
       super(activity, email, scope, requestCode);
   }
 
@@ -40,17 +46,23 @@ public class GetNameInForeground extends AbstractGetNameTask {
    */
   @Override
   protected String fetchToken() throws IOException {
+	  Log.d(TAG,"fetchToken");
       try {
+    	  Log.d(TAG,"fetchToken|getToken|email=" + mEmail + "|scope=" + mScope);
+    	  if (mActivity == null) Log.d(TAG,"fetchToken|mActivity null");
+    	  else Log.d(TAG,"fetchToken|mActivity not null");
           return GoogleAuthUtil.getToken(mActivity, mEmail, mScope);
       } catch (GooglePlayServicesAvailabilityException playEx) {
           // GooglePlayServices.apk is either old, disabled, or not present.
-          mActivity.showErrorDialog(playEx.getConnectionStatusCode());
+    	  Toast.makeText(mActivity, playEx.getConnectionStatusCode(), Toast.LENGTH_LONG).show();
       } catch (UserRecoverableAuthException userRecoverableException) {
           // Unable to authenticate, but the user can fix this.
           // Forward the user to the appropriate activity.
           mActivity.startActivityForResult(userRecoverableException.getIntent(), mRequestCode);
       } catch (GoogleAuthException fatalException) {
           onError("Unrecoverable error " + fatalException.getMessage(), fatalException);
+      } catch (RuntimeException e) {
+    	  e.printStackTrace();
       }
       return null;
   }

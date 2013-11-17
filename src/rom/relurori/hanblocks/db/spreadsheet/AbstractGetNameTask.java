@@ -23,6 +23,7 @@ import com.google.gdata.data.spreadsheet.SpreadsheetFeed;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -43,13 +44,13 @@ import java.util.List;
 public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void>{
     private static final String TAG = "TokenInfoTask";
     private static final String NAME_KEY = "given_name";
-    protected SpreadsheetGdataActivity mActivity;
+    protected Activity mActivity;
 
     protected String mScope;
     protected String mEmail;
     protected int mRequestCode;
 
-    AbstractGetNameTask(SpreadsheetGdataActivity activity, String email, String scope, int requestCode) {
+    AbstractGetNameTask(Activity activity, String email, String scope, int requestCode) {
         this.mActivity = activity;
         this.mScope = scope;
         this.mEmail = email;
@@ -78,7 +79,7 @@ public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void>{
         if (e != null) {
           Log.e(TAG, "Exception: ", e);
         }
-        mActivity.show(msg);  // will be run in UI thread
+        Log.d(TAG,"onError|msg=" + msg);
     }
 
     /**
@@ -102,13 +103,15 @@ public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void>{
           // error has already been handled in fetchToken()
           return;
         }
+        Log.d(TAG,"fetchNameFromProfileServer|open connection");
         URL url = new URL("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         int sc = con.getResponseCode();
+        Log.d(TAG,"fetchNameFromProfileServer|response code=" + sc);
         if (sc == 200) {
           InputStream is = con.getInputStream();
           String name = getFirstName(readResponse(is));
-          mActivity.show("Hello " + name + "!");
+          Log.d(TAG,"fetchNameFromProfileServer|Hello "+ name  + "!");
           is.close();
           return;
         } else if (sc == 401) {
