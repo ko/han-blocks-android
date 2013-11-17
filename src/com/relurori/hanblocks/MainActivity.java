@@ -4,6 +4,7 @@ package com.relurori.hanblocks;
 import com.relurori.hanblocks.R;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -42,6 +43,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		PreferenceManager.setDefaultValues(this, R.xml.preferences_example, false);
 		
 		onCreateSetupNavigationDrawer();
 	}
