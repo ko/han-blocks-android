@@ -13,6 +13,7 @@ import android.content.res.Configuration;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +39,8 @@ public class MainActivity extends Activity {
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
+	
+	private String mToken = new String();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +145,7 @@ public class MainActivity extends Activity {
 		case 0:
 			mTempFragment = mStudyFragment;
 			b.putInt(mStudyFragment.DRAWER_ITEM_KEY, position);
+			break;
 		case 1:
 			mTempFragment = mQuizFragment;
 			b.putInt(mQuizFragment.DRAWER_ITEM_KEY, position);
@@ -170,4 +174,12 @@ public class MainActivity extends Activity {
 	    getActionBar().setTitle(mTitle);
 	}
 
+	public void setToken(String s) {
+		Log.d(TAG,"setToken|mToken=" + mToken + "|s=" + s);
+		mToken = s;
+	}
+	public String getToken() {
+		Log.d(TAG,"getToken|mToken=" + mToken);
+		return mToken;
+	}
 }

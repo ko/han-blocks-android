@@ -56,7 +56,7 @@ public class SettingsFragment extends PreferenceFragment {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				Log.d(TAG,"newValue=" + newValue);
-				OauthUtils.getTask(getActivity(), (String)newValue, SCOPE, 
+				OauthUtils.getTask((MainActivity)getActivity(), (String)newValue, SCOPE, 
 								   REQUEST_CODE_RECOVER_FROM_AUTH_ERROR)
 								   .execute();
 				return false;

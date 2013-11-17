@@ -24,6 +24,7 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
 import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.relurori.hanblocks.MainActivity;
 
 import java.io.IOException;
 
@@ -35,7 +36,7 @@ public class GetNameInForeground extends AbstractGetNameTask {
 
 	private static final String TAG = GetNameInForeground.class.getSimpleName();
 	
-  public GetNameInForeground(Activity activity, String email, String scope, int requestCode) {
+  public GetNameInForeground(MainActivity activity, String email, String scope, int requestCode) {
       super(activity, email, scope, requestCode);
   }
 
@@ -51,7 +52,8 @@ public class GetNameInForeground extends AbstractGetNameTask {
     	  Log.d(TAG,"fetchToken|getToken|email=" + mEmail + "|scope=" + mScope);
     	  if (mActivity == null) Log.d(TAG,"fetchToken|mActivity null");
     	  else Log.d(TAG,"fetchToken|mActivity not null");
-          return GoogleAuthUtil.getToken(mActivity, mEmail, mScope);
+          ((MainActivity) mActivity).setToken(GoogleAuthUtil.getToken(mActivity, mEmail, mScope));
+          return ((MainActivity) mActivity).getToken();
       } catch (GooglePlayServicesAvailabilityException playEx) {
           // GooglePlayServices.apk is either old, disabled, or not present.
     	  Toast.makeText(mActivity, playEx.getConnectionStatusCode(), Toast.LENGTH_LONG).show();

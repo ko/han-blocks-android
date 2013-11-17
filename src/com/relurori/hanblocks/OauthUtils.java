@@ -2,7 +2,6 @@ package com.relurori.hanblocks;
 
 import rom.relurori.hanblocks.db.spreadsheet.AbstractGetNameTask;
 import rom.relurori.hanblocks.db.spreadsheet.GetNameInForeground;
-import rom.relurori.hanblocks.db.spreadsheet.SpreadsheetGdataActivity;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -28,7 +27,7 @@ public class OauthUtils {
 	 * Note: This approach is for demo purposes only. Clients would normally not
 	 * get tokens in the background from a Foreground activity.
 	 */
-	public static AbstractGetNameTask getTask(Activity activity,
+	public static AbstractGetNameTask getTask(MainActivity activity,
 										String email, String scope, int requestCode) {
 		return new GetNameInForeground(activity, email, scope, requestCode);
 	}
