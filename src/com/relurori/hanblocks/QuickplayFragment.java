@@ -37,10 +37,17 @@ public class QuickplayFragment extends Fragment {
 		
 		mView = inflater.inflate(R.layout.fragment_quickplay, container, false);
 		
+		onCreateRefreshBackend();
+		
 		onCreateSetupTextView();
 		onCreateSetupButtons();
 		
 		return mView;
+	}
+
+	private void onCreateRefreshBackend() {
+		Log.d(TAG,"onCreateRefreshBackend");
+		new SpreadsheetUtils.GetQA(getActivity(), ((MainActivity) getActivity()).getToken()).execute();
 	}
 
 	private void onCreateSetupTextView() {

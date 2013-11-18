@@ -18,8 +18,11 @@ package rom.relurori.hanblocks.db.spreadsheet;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.gdata.client.spreadsheet.SpreadsheetService;
+import com.google.gdata.data.spreadsheet.ListEntry;
+import com.google.gdata.data.spreadsheet.ListFeed;
 import com.google.gdata.data.spreadsheet.SpreadsheetEntry;
 import com.google.gdata.data.spreadsheet.SpreadsheetFeed;
+import com.google.gdata.data.spreadsheet.WorksheetEntry;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
@@ -65,7 +68,7 @@ public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void>{
 		try {
 			// do work on server
 			fetchNameFromProfileServer();
-			fetchSpreadsheetListFromServer();
+			//fetchSpreadsheetListFromServer();
 		} catch (IOException ex) {
 			onError("Following Error occured, please try again. "
 					+ ex.getMessage(), ex);
