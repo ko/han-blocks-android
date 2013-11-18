@@ -65,9 +65,6 @@ public class SpreadsheetUtils {
 	            List<SpreadsheetEntry> spreadsheets = feed.getEntries();
 
 	            for (SpreadsheetEntry service : spreadsheets) {             
-	                
-	            	//Log.d(TAG,service.getTitle().getPlainText());
-	                
 	            	if (service.getTitle().getPlainText().equalsIgnoreCase("PublicTest")) {
 	                	WorksheetFeed worksheetFeed = spreadsheet.getFeed(service.getWorksheetFeedUrl(), WorksheetFeed.class);
 	                	List<WorksheetEntry> worksheets = worksheetFeed.getEntries();
@@ -78,8 +75,10 @@ public class SpreadsheetUtils {
 
 						// Iterate through each row, printing its cell values.
 						for (ListEntry row : listFeed.getEntries()) {
+							
 							// Print the first column's cell value
 							Log.d(TAG, row.getTitle().getPlainText() + "\t");
+							
 							// Iterate over the remaining columns, and print
 							// each cell value
 							for (String tag : row.getCustomElements().getTags()) {
