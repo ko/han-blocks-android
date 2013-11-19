@@ -22,7 +22,7 @@ public class OauthUtils {
 		}
 		return names;
 	}
-
+	
 	/**
 	 * Note: This approach is for demo purposes only. Clients would normally not
 	 * get tokens in the background from a Foreground activity.
@@ -31,4 +31,5 @@ public class OauthUtils {
 										String email, String scope, int requestCode) {
 		return new GetNameInForeground(activity, email, scope, requestCode);
 	}
+
 }

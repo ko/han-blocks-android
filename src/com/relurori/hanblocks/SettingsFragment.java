@@ -34,6 +34,9 @@ public class SettingsFragment extends PreferenceFragment {
 
     static final int REQUEST_CODE_RECOVER_FROM_AUTH_ERROR = 1001;
     static final int REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1002;
+
+    ListPreference listPreference;
+    CharSequence[] charArray;
     
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,11 +44,10 @@ public class SettingsFragment extends PreferenceFragment {
 
 		// Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences);
-
         
-        ListPreference listPreference = (ListPreference) findPreference("account_list_preference");
+        listPreference = (ListPreference) findPreference("account_list_preference");
         
-        CharSequence[] charArray = OauthUtils.getAccountNames(getActivity(),mAccountManager);
+        charArray = OauthUtils.getAccountNames(getActivity(),mAccountManager);
 		listPreference.setEntries(charArray);
 		listPreference.setEntryValues(charArray);
 		
@@ -56,17 +58,35 @@ public class SettingsFragment extends PreferenceFragment {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				Log.d(TAG,"newValue=" + newValue);
-				OauthUtils.getTask((MainActivity)getActivity(), (String)newValue, SCOPE, 
-								   REQUEST_CODE_RECOVER_FROM_AUTH_ERROR)
-								   .execute();
+				
+				getOauthToken((String)newValue, SCOPE);
+				
+				updateSpreadsheetListPreference();
 				return false;
 			}
+
+
 		});
 
-		
 	}
 	
-	
+	protected void getOauthToken(String email, String SCOPE) {
+		OauthUtils.getTask((MainActivity)getActivity(), email, SCOPE, 
+				   REQUEST_CODE_RECOVER_FROM_AUTH_ERROR)
+				   .execute();
+	}
+
+	private void updateSpreadsheetListPreference() {
+		listPreference = (ListPreference) findPreference("spreadsheet_list_preference");
+		
+		new SpreadsheetUtils.GetSpreadsheets(getActivity(), 
+											((MainActivity) getActivity())
+											.getToken()).execute();
+		
+		listPreference.setEntries(charArray);
+		listPreference.setEntryValues(charArray);
+		
+	}
 
 
 

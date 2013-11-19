@@ -11,6 +11,12 @@
                 android:summary="summary_list_preference"
                 android:dialogTitle="dialog_title_list_preference" />
 
+        
+        <ListPreference
+            android:key="spreadsheet_list_preference"
+            android:title="spreadsheet_list"
+            android:summary="spreadsheets_summary"
+            android:dialogTitle="dialog_spreadsheet_title_list_preference" />
     </PreferenceCategory>
 
 </PreferenceScreen>

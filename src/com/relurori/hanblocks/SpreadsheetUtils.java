@@ -16,12 +16,40 @@ import com.google.gdata.data.spreadsheet.WorksheetFeed;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 public class SpreadsheetUtils {
 
+	public static String[] getSpreadsheetTitles(Context context, AccountManager accountManager) {
+		
+		String[] spreadsheets = null;
+		
+		return spreadsheets;
+	}
+	
+	public static class GetSpreadsheets extends AsyncTask<Void,Void,Void> {
+
+		Activity mActivity;
+		String mToken;
+		
+
+		public GetSpreadsheets(Activity activity, String token) {
+			this.mActivity = activity;
+			this.mToken = token;
+		}
+		
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+	}
+	
 	public static class GetQA extends AsyncTask<Void, Void, Void> {
 
 		private static final String TAG = GetQA.class.getSimpleName();
